@@ -301,17 +301,17 @@
 
         // 2. 更新後的二次色判定規則 (絕對值 < 64)
         // 黃色 Y (R, G)
-        if (Math.abs(r - g) < 64) {
+        if (Math.abs(r - g) <= 32) {
             let avgVal = (r + g) / 2;
             res.push(生成特質Html(avgVal, 二次色定義.RG.p, 二次色定義.RG.n, 模式));
         }
         // 青色 C (G, B)
-        if (Math.abs(g - b) < 64) {
+        if (Math.abs(g - b) <= 32) {
             let avgVal = (g + b) / 2;
             res.push(生成特質Html(avgVal, 二次色定義.GB.p, 二次色定義.GB.n, 模式));
         }
         // 紫色 M (B, R)
-        if (Math.abs(b - r) < 64) {
+        if (Math.abs(b - r) <= 32) {
             let avgVal = (b + r) / 2;
             res.push(生成特質Html(avgVal, 二次色定義.BR.p, 二次色定義.BR.n, 模式));
         }
