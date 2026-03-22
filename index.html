@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>相處特質分析系統（血型 + 星座 + 顏色特質)</title>
+    <title>相處特質分析系統（星座、血型、人格顏色）</title>
     <style>
         :root {
             --bg-color: #fdfdfd;
@@ -15,10 +15,10 @@
             --raw-border: #ddd;
             --merge-bg: #fffcf9;
             --merge-border: #f0f0f0;
-            --pos-color: #337ab7; /* 正向特質文字：藍 */
-            --icon-color: #5cb85c; /* 綠圈🟢樣式 */
-            --neg-color: #d9534f; /* 負面惡化文字：紅 */
-            --sup-color: #5cb85c; /* 負面改善文字：綠 */
+            --pos-color: #337ab7; 
+            --icon-color: #5cb85c; 
+            --neg-color: #d9534f; 
+            --sup-color: #5cb85c; 
         }
 
         body { 
@@ -29,26 +29,24 @@
             align-items: flex-start; 
             min-height: 100vh; 
             margin: 0; 
-            padding: 10px; /* 小螢幕邊距 */
+            padding: 10px; 
             box-sizing: border-box;
             color: var(--text-color);
         }
 
-        /* 主容器佈局修改 */
         .主容器 { 
             display: flex; 
-            flex-direction: column; /* 預設改為垂直堆疊 */
+            flex-direction: column; 
             gap: 15px; 
             width: 100%; 
-            max-width: 600px; /* 手機端限制最大寬度 */
+            max-width: 600px; 
             box-sizing: border-box;
         }
 
-        /* 卡片樣式修改 */
         .卡片 { 
             flex: 1; 
             background: var(--card-bg); 
-            padding: 20px; /* 減少縮進 */
+            padding: 20px; 
             border-radius: 8px; 
             border: 1px solid var(--border-color); 
             text-align: center; 
@@ -56,9 +54,8 @@
             box-sizing: border-box;
         }
 
-        /* 中央卡片特別佈局 */
         .中央卡片 { 
-            order: -1; /* 將合併人格移至最上方 */
+            order: -1; 
             border: 2px solid #f0f0f0; 
             background: var(--merge-bg); 
         }
@@ -71,7 +68,6 @@
             text-transform: uppercase; 
         }
 
-        /* 選單佈局調整 */
         .選單區域 {
             display: flex;
             gap: 10px;
@@ -92,18 +88,18 @@
 
         select { 
             width: 100%; 
-            padding: 8px 0; /* 增加點擊區域 */
+            padding: 8px 0; 
             border: none; 
             border-bottom: 1px solid var(--border-color); 
             font-size: 0.85rem; 
             cursor: pointer; 
             outline: none; 
             background: transparent; 
-            -webkit-appearance: none; /* 移除預設樣式 */
+            -webkit-appearance: none; 
         }
 
         .圓圈 { 
-            width: 60px; /* 縮小尺寸 */
+            width: 60px; 
             height: 60px; 
             border-radius: 50%; 
             margin: 10px auto; 
@@ -112,7 +108,6 @@
             transition: all 0.3s; 
         }
         
-        /* 中央圓圈縮小 */
         .中央卡片 .圓圈 {
             width: 90px;
             height: 90px;
@@ -129,7 +124,7 @@
             text-align: left; 
             padding: 10px; 
             border-radius: 5px; 
-            font-size: 0.7rem; /* 手機字體調整 */
+            font-size: 0.7rem; 
             line-height: 1.5; 
         }
 
@@ -143,7 +138,7 @@
             background: var(--card-bg); 
             border-left: 3px solid var(--border-color); 
             color: #444; 
-            min-height: 70px; /* 降低高度 */
+            min-height: 70px; 
         }
         
         .合併屬性區塊 {
@@ -171,24 +166,20 @@
             vertical-align: middle; 
         }
         
-        /* 樣式類 */
         .強化 { color: var(--neg-color); font-weight: bold; } 
         .抑制 { color: var(--sup-color); font-weight: bold; } 
         .正向文字 { color: var(--pos-color); } 
 
-        /* 媒體查詢：在大螢幕時切換回橫向佈局 */
         @media (min-width: 992px) {
             .主容器 { 
-                flex-direction: row; /* 恢復橫向 */
+                flex-direction: row; 
                 max-width: 1350px; 
                 padding: 15px;
                 align-items: center;
                 gap: 15px;
             }
-            
             .卡片 { padding: 25px; }
-            .中央卡片 { order: 0; flex: 0 0 370px; } /* 恢復位置和寬度 */
-            
+            .中央卡片 { order: 0; flex: 0 0 370px; } 
             h1 { font-size: 0.8rem; }
             .選單區域 { display: block; margin-bottom: 12px; }
             .選單區塊 { margin-bottom: 12px; }
@@ -243,7 +234,6 @@
 </div>
 
 <script>
-    // 核心邏輯保持不變
     const 星座資料 = {
         "牡羊座": [128, 0, 0, 0],   "金牛座": [0, 128, 0, 128], "雙子座": [0, 64, 64, 128],
         "巨蟹座": [0, 0, 128, 128], "獅子座": [128, 0, 0, 128], "處女座": [64, 64, 0, 128],
@@ -254,7 +244,7 @@
         "O 型": [128, 0, 0, 0], 
         "B 型": [0, 128, 0, 0], 
         "A 型": [0, 0, 128, 0],
-        "AB 型": [0, 64, 64, 0] // 0x00404000
+        "AB 型": [0, 64, 64, 0] 
     };
     const 定義 = [{p: "行動與能量", n: "侵略與煩燥"}, {p: "和平與穩定", n: "執拗與嫉妒"}, {p: "嚴謹與深思", n: "憂鬱與墨守"}];
 
@@ -286,11 +276,11 @@
             else if (模式 === "削弱") { text = "被抑制的" + text; cls = "抑制"; }
             else if (val < 0x40) cls = "強化"; 
         } else {
-            iconHtml = '<span class="綠圈">🟢</span>'; // 正向特質加綠圈
+            iconHtml = '<span class="綠圈">🟢</span>'; 
             if (val > 0xBF) cls = "正向文字";
         }
 
-        return `<div class="特質項目 ${cls}">• ${text}${iconHtml}</div>`;
+        return `<div class="特質項目 ${cls}">• ${text} (${val})${iconHtml}</div>`;
     }
 
     function 執行計算() {
@@ -303,35 +293,65 @@
         const p1 = getP("z1", "b1"), p2 = getP("z2", "b2");
         if (!p1 || !p2) return;
 
+        // 1. 顯示原生本質
         document.getElementById("p1_raw").innerHTML = p1.slice(0,3).map((v,i)=>判定(v, 定義[i].p, 定義[i].n)).join('');
         document.getElementById("p2_raw").innerHTML = p2.slice(0,3).map((v,i)=>判定(v, 定義[i].p, 定義[i].n)).join('');
         document.getElementById("c1").style.backgroundColor = `rgba(${p1[0]},${p1[1]},${p1[2]},${(p1[3]||255)/255})`;
         document.getElementById("c2").style.backgroundColor = `rgba(${p2[0]},${p2[1]},${p2[2]},${(p2[3]||255)/255})`;
 
+        // 2. 計算干預模式與數值 (實質連動)
         let m1 = "正常", m2 = "正常";
-        if (p1[3] === 128 && p2[3] === 128) m1 = m2 = "削弱";
-        else if (p1[3] === 0 && p2[3] === 0) m1 = m2 = "強化";
+        let l1 = p1[3], l2 = p2[3];
 
-        const renderInter = (p, m) => m === "正常" ? "無顯著場域干預" : p.slice(0,3).map((v,i)=>判定(v, 定義[i].p, 定義[i].n, m)).join('');
-        document.getElementById("p1_inter").innerHTML = renderInter(p1, m1);
-        document.getElementById("p2_inter").innerHTML = renderInter(p2, m2);
+        if (l1 === 128 && l2 === 128) m1 = m2 = "削弱";
+        else if (l1 === 0 && l2 === 0) m1 = m2 = "強化";
 
-        let baseRGB = [Math.min(255, p1[0]+p2[0]), Math.min(255, p1[1]+p2[1]), Math.min(255, p1[2]+p2[2])];
-        let finalRGB = [...baseRGB], l1 = p1[3], l2 = p2[3];
+        // 關鍵修正：實質計算干預後的各頻道數值
+        const calculateInterP = (targetP, targetL, otherL) => {
+            return targetP.slice(0, 3).map(v => {
+                let newVal = v;
+                let isPos = v >= 0x80;
+                
+                if (targetL === 128 && otherL === 128) {
+                    // 同為高亮度：正向更正，負向更負（抑制惡化）
+                    if (isPos) newVal = Math.min(255, v + 0x40);
+                } else if (targetL === 0 && otherL === 0) {
+                    // 同為低亮度：能量互撞，正向受損
+                    if (isPos) newVal = Math.max(0, v - 0x40);
+                } else if (targetL !== otherL) {
+                    // 亮度不等：正向強化，負向加深
+                    if (isPos) newVal = Math.min(255, v + 0x20);
+                    else newVal = Math.max(0, v - 0x20);
+                }
+                return newVal;
+            });
+        };
 
-        baseRGB.forEach((v, i) => {
+        const interP1_values = calculateInterP(p1, l1, l2);
+        const interP2_values = calculateInterP(p2, l2, l1);
+
+        const renderInter = (pValues, m, targetL, otherL) => {
+            if (m === "正常" && targetL === otherL) return "無顯著場域干預";
+            return pValues.map((v, i) => 判定(v, 定義[i].p, 定義[i].n, m)).join('');
+        };
+
+        document.getElementById("p1_inter").innerHTML = renderInter(interP1_values, m1, l1, l2);
+        document.getElementById("p2_inter").innerHTML = renderInter(interP2_values, m2, l2, l1);
+
+        // 3. 合併共鳴
+        let finalRGB = [Math.min(255, p1[0]+p2[0]), Math.min(255, p1[1]+p2[1]), Math.min(255, p1[2]+p2[2])];
+        
+        finalRGB.forEach((v, i) => {
             let isPos = v >= 0x80;
             if (l1 === 128 && l2 === 128) { if (isPos) finalRGB[i] = Math.min(255, v + 0x40); }
             else if (l1 === 0 && l2 === 0) { if (isPos) finalRGB[i] = Math.max(0, v - 0x40); }
             else if (l1 !== l2) {
-                if (isPos) finalRGB[i] = Math.min(255, v + 0x20); // 不同：強化正向
-                else finalRGB[i] = Math.max(0, v - 0x20);        // 不同：加深負向
+                if (isPos) finalRGB[i] = Math.min(255, v + 0x20);
+                else finalRGB[i] = Math.max(0, v - 0x20);
             }
         });
 
         document.getElementById("descR").innerHTML = finalRGB.map((v,i)=>判定(v, 定義[i].p, 定義[i].n)).join('');
-        
-        // 中央圓圈亮度計算 (確保視覺上有透明度變化)
         document.getElementById("cr").style.backgroundColor = `rgba(${finalRGB[0]},${finalRGB[1]},${finalRGB[2]},${(Math.min(255, l1+l2)||255)/255})`;
     }
 </script>
