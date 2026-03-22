@@ -270,7 +270,7 @@
 
     function 生成特質Html(val, posN, negN, 模式) {
         let prefix = "";
-        let isPos = val >= 0x80;
+        let isPos = val >= 128;
         if (val === 255) prefix = "強大的";
         else if (val > 191) prefix = "明顯的";
         else if (val < 64) prefix = "惡化的";
@@ -287,22 +287,34 @@
             iconHtml = '<span class="綠圈">🟢</span>'; 
             if (val > 191) cls = "正向文字";
         }
-        return `<div class="特質項目 ${cls}">• ${text} (${val})${iconHtml}</div>`;
+        return `<div class="特質項目 ${cls}">• ${text} (${Math.round(val)})${iconHtml}</div>`;
     }
 
     function 判定(p陣列, 模式 = "正常") {
         let res = [];
         const [r, g, b] = p陣列;
 
-        // 1. 處理基礎色 R, G, B
+        // 1. 基礎色
         res.push(生成特質Html(r, 基礎定義[0].p, 基礎定義[0].n, 模式));
         res.push(生成特質Html(g, 基礎定義[1].p, 基礎定義[1].n, 模式));
         res.push(生成特質Html(b, 基礎定義[2].p, 基礎定義[2].n, 模式));
 
-        // 2. 修正邏輯：即使數值為 0 也要帶入二次色
-        if (r === g) res.push(生成特質Html(r, 二次色定義.RG.p, 二次色定義.RG.n, 模式));
-        if (g === b) res.push(生成特質Html(g, 二次色定義.GB.p, 二次色定義.GB.n, 模式));
-        if (b === r) res.push(生成特質Html(b, 二次色定義.BR.p, 二次色定義.BR.n, 模式));
+        // 2. 更新後的二次色判定規則 (絕對值 < 64)
+        // 黃色 Y (R, G)
+        if (Math.abs(r - g) < 64) {
+            let avgVal = (r + g) / 2;
+            res.push(生成特質Html(avgVal, 二次色定義.RG.p, 二次色定義.RG.n, 模式));
+        }
+        // 青色 C (G, B)
+        if (Math.abs(g - b) < 64) {
+            let avgVal = (g + b) / 2;
+            res.push(生成特質Html(avgVal, 二次色定義.GB.p, 二次色定義.GB.n, 模式));
+        }
+        // 紫色 M (B, R)
+        if (Math.abs(b - r) < 64) {
+            let avgVal = (b + r) / 2;
+            res.push(生成特質Html(avgVal, 二次色定義.BR.p, 二次色定義.BR.n, 模式));
+        }
 
         return res.join('');
     }
@@ -317,13 +329,11 @@
         const p1 = getP("z1", "b1"), p2 = getP("z2", "b2");
         if (!p1 || !p2) return;
 
-        // 原生顯示
         document.getElementById("p1_raw").innerHTML = 判定(p1);
         document.getElementById("p2_raw").innerHTML = 判定(p2);
         document.getElementById("c1").style.backgroundColor = `rgba(${p1[0]},${p1[1]},${p1[2]},${(p1[3]||255)/255})`;
         document.getElementById("c2").style.backgroundColor = `rgba(${p2[0]},${p2[1]},${p2[2]},${(p2[3]||255)/255})`;
 
-        // 對方影響計算
         let m1 = "正常", m2 = "正常";
         let l1 = p1[3], l2 = p2[3];
         if (l1 === 128 && l2 === 128) m1 = m2 = "削弱";
@@ -349,7 +359,6 @@
         document.getElementById("p1_inter").innerHTML = (m1 === "正常" && l1 === l2) ? "無顯著場域干預" : 判定(interP1_values, m1);
         document.getElementById("p2_inter").innerHTML = (m2 === "正常" && l1 === l2) ? "無顯著場域干預" : 判定(interP2_values, m2);
 
-        // 合併共鳴
         let finalRGB = [Math.min(255, p1[0]+p2[0]), Math.min(255, p1[1]+p2[1]), Math.min(255, p1[2]+p2[2])];
         finalRGB.forEach((v, i) => {
             let isPos = v >= 128;
