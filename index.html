@@ -189,7 +189,7 @@
                 arrowHtml = `<span class="趨勢標記" style="color:${CONFIG.COLORS.DOWN}">▼</span>`;
             }
         } else {
-            if (val === 255) { text = CONFIG.PREFIX.STRONG + text; style = `color:${CONFIG.COLORS.MAX}; font-weight:bold;`; }
+            if (val >= 255) { text = CONFIG.PREFIX.STRONG + text; style = `color:${CONFIG.COLORS.MAX}; font-weight:bold;`; }
             else if (val > 191) text = CONFIG.PREFIX.OBVIOUS + text;
             else if (val < 64) { 
                 if (val === 0) { text = CONFIG.PREFIX.DETERIORATED + text; style = `color:${CONFIG.COLORS.MIN}; font-weight:bold;`; }
