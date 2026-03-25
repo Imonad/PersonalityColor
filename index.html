@@ -3,72 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>相處特質分析系統</title>
+    <title>相處特質分析系統 V2.6.0</title>
     <style>
         :root {
-            --bg-color: #fdfdfd;
-            --card-bg: #fff;
-            --border-color: #eee;
-            --text-color: #444;
-            --sub-text-color: #aaa;
-            --raw-bg: #f8f9fa;
-            --raw-border: #ddd;
-            --merge-bg: #fffcf9;
-            --merge-border: #f0f0f0;
-            --color-pos: #7f7fff;
-            --color-neg: #ff7f7f;
-            --color-extreme-min: #FF0000;
-            --color-extreme-max: #0000FF;
-            --color-up: #009F00;
-            --color-down: #FF0000;
+            --bg-color: #fdfdfd; --card-bg: #fff; --border-color: #eee;
+            --text-color: #444; --sub-text-color: #aaa; --raw-bg: #f8f9fa;
+            --raw-border: #ddd; --merge-bg: #fffcf9; --merge-border: #f0f0f0;
+            --color-up: #009F00; --color-down: #BF00BF;
         }
-
-        body { 
-            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; 
-            background: var(--bg-color); 
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px 10px; 
-            box-sizing: border-box;
-            color: var(--text-color);
-        }
-
+        body { font-family: "Microsoft JhengHei", sans-serif; background: var(--bg-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px 10px; box-sizing: border-box; color: var(--text-color); }
         .頁首區域 { text-align: center; margin-bottom: 25px; }
         .主標題 { font-size: 1.5rem; font-weight: bold; color: #333; margin: 0; letter-spacing: 2px; }
         .版本資訊 { font-size: 0.7rem; color: var(--sub-text-color); margin-top: 5px; }
-
         .主容器 { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 600px; box-sizing: border-box; }
         .卡片 { flex: 1; background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); box-sizing: border-box; }
         .中央卡片 { order: -1; border: 2px solid #f0f0f0; background: var(--merge-bg); }
         h1 { font-size: 0.75rem; letter-spacing: 0.15em; color: var(--sub-text-color); margin: 0 0 15px 0; text-transform: uppercase; }
-
-        .選單區域 { display: flex; gap: 10px; margin-bottom: 12px; }
-        .選單區塊 { flex: 1; text-align: left; }
+        .選單區域 { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .選單區塊 { flex: 1; min-width: 80px; text-align: left; }
         label { font-size: 0.6rem; color: #ccc; display: block; margin-bottom: 2px; }
-        select { width: 100%; padding: 8px 0; border: none; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; cursor: pointer; outline: none; background: transparent; -webkit-appearance: none; }
-
+        select { width: 100%; padding: 8px 0; border: none; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; outline: none; background: transparent; box-sizing: border-box; }
         .圓圈 { width: 60px; height: 60px; border-radius: 50%; margin: 10px auto; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s; background-color: #eee; }
         .中央卡片 .圓圈 { width: 90px; height: 90px; }
-
         .分析區 { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .區塊 { text-align: left; padding: 10px; border-radius: 5px; font-size: 0.7rem; line-height: 1.5; min-height: 20px; }
         .原生 { background: var(--raw-bg); border-left: 3px solid var(--raw-border); color: #777; }
         .干預 { background: var(--card-bg); border-left: 3px solid var(--border-color); color: #444; min-height: 70px; }
         .合併屬性區塊 { background: white; border: 1px inset var(--merge-border); }
-
         .小標 { font-size: 0.6rem; font-weight: bold; margin-bottom: 4px; color: #999; display: block; }
         .特質項目 { margin-bottom: 2px; display: block; }
         .趨勢標記 { font-size: 0.6rem; margin-left: 4px; vertical-align: middle; }
-
         @media (min-width: 992px) {
-            .主容器 { flex-direction: row; max-width: 1350px; padding: 15px; align-items: center; gap: 15px; }
+            .主容器 { flex-direction: row; max-width: 1400px; padding: 15px; align-items: center; gap: 15px; }
             .中央卡片 { order: 0; flex: 0 0 370px; } 
             .圓圈 { width: 70px; height: 70px; }
             .中央卡片 .圓圈 { width: 110px; height: 110px; }
-            .區塊 { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -85,7 +54,7 @@
         <div id="cr" class="圓圈"></div>
         <div class="分析區">
             <div class="區塊 合併屬性區塊">
-                <span class="小標">● 融合後的特質屬性</span>
+                <span class="小標">● 融合後的關係共鳴</span>
                 <div id="descR"></div>
             </div>
         </div>
@@ -94,196 +63,228 @@
     <div class="卡片">
         <h1>對象 A</h1>
         <div class="選單區域">
+            <div class="選單區塊"><label>出生年份</label><select id="y1" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>星座</label><select id="z1" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>血型</label><select id="b1" onchange="執行計算()"></select></div>
+            <div class="選選區域 選單區塊"><label>居住地</label><select id="l1" onchange="執行計算()"></select></div>
         </div>
         <div id="c1" class="圓圈"></div>
         <div class="分析區">
-            <div class="區塊 原生"><span class="小標">● 原生本質</span><div id="p1_raw"></div></div>
-            <div class="區塊 干預"><span class="小標">● 對方影響</span><div id="p1_inter"></div></div>
+            <div class="區塊 原生"><span class="小標">● 個人特質</span><div id="p1_raw"></div></div>
+            <div class="區塊 干預"><span class="小標">● 對方帶來的變化</span><div id="p1_inter"></div></div>
         </div>
     </div>
 
     <div class="卡片">
         <h1>對象 B</h1>
         <div class="選單區域">
+            <div class="選單區塊"><label>出生年份</label><select id="y2" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>星座</label><select id="z2" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>血型</label><select id="b2" onchange="執行計算()"></select></div>
+            <div class="選單區塊"><label>居住地</label><select id="l2" onchange="執行計算()"></select></div>
         </div>
         <div id="c2" class="圓圈"></div>
         <div class="分析區">
-            <div class="區塊 原生"><span class="小標">● 原生本質</span><div id="p2_raw"></div></div>
-            <div class="區塊 干預"><span class="小標">● 對方影響</span><div id="p2_inter"></div></div>
+            <div class="區塊 原生"><span class="小標">● 個人特質</span><div id="p2_raw"></div></div>
+            <div class="區塊 干預"><span class="小標">● 對方帶來的變化</span><div id="p2_inter"></div></div>
         </div>
     </div>
 </div>
 
 <script>
     const CONFIG = {
-        VERSION: "1.5.3",
-        UI: { NO_INTERFERENCE: "無顯著場域干預" },
-        THRESHOLDS: { OFFSET: 128, POSITIVE: 128, SECONDARY_DIFF: 32 },
+        VERSION: "2.6.0",
         COLORS: {
-            POS: "#7f7fff", NEG: "#ff7f7f", MIN: "#FF0000", MAX: "#0000FF",
-            UP: "#009F00", DOWN: "#FF0000"
-        },
-        PREFIX: {
-            STRONG: "極致的", OBVIOUS: "明顯的", DETERIORATED: "糟糕的",
-            INTER_ENHANCED: "被強化的", INTER_SUPPRESSED: "被抑制的",
-            INTER_WEAKENED: "被削弱的", INTER_INTENSIFIED: "顯著加劇的"
+            UP: "#009F00", DOWN: "#BF00BF",
+            NEG_BAD: "#FF0000", NEG_ABRUPT: "#FF3F3F", NEG_NORMAL: "#FF5F5F",
+            POS_NORMAL: "#5F5FFF", POS_BRIGHT: "#3F3FFF", POS_EXTREME: "#0000FF"
         },
         TRAITS: {
-            PRIMARY: [
-                { p: "行動與能量", n: "侵略與暴躁" },
-                { p: "和平與穩定", n: "執拗與嫉妒" },
-                { p: "嚴謹與深思", n: "憂鬱與墨守" }
-            ],
-            SECONDARY: {
-                RG: { p: "樂觀與創意", n: "焦慮與狡詐" },
-                GB: { p: "理性與溝通", n: "疏離與冷漠" },
-                BR: { p: "感性與直覺", n: "病態與自我" }
-            }
+            PRIMARY: [{ p: "行動與能量", n: "侵略與煩躁" }, { p: "和平與穩定", n: "執拗與嫉妒" }, { p: "嚴謹與深思", n: "憂鬱與墨守" }],
+            SECONDARY: [{ p: "樂觀與創意", n: "焦慮與詭譎" }, { p: "理性與溝通", n: "疏離與冷漠" }, { p: "感性與直覺", n: "病態與自我" }],
+            MERGE: [{ p: "共鳴與增長", n: "競爭與消耗" }, { p: "依賴與托付", n: "依附與索求" }, { p: "好奇與趣味", n: "倦怠與墨守" }, { p: "默契與同步", n: "控制與窒息" }, { p: "坦誠與接納", n: "疏離與冷暴力" }, { p: "靈魂的交織", n: "病態的共生" }]
         },
         DATA: {
-            ZODIAC: {
-                "牡羊座": [128, 0, 0, 0],   "金牛座": [0, 128, 0, 128], "雙子座": [0, 64, 64, 128],
-                "巨蟹座": [0, 0, 128, 128], "獅子座": [128, 0, 0, 128], "處女座": [64, 64, 0, 128],
-                "天秤座": [64, 0, 64, 128], "天蠍座": [0, 0, 128, 0],   "射手座": [64, 64, 0, 0],
-                "摩羯座": [0, 128, 0, 0],   "水瓶座": [64, 0, 64, 0],   "雙魚座": [0, 64, 64, 0]
-            },
-            BLOOD: { 
-                "O 型": [128, 0, 0, 0], "B 型": [0, 128, 0, 0], "A 型": [0, 0, 128, 0], "AB 型": [0, 64, 64, 0] 
+            ZODIAC: { "牡羊座": [128, 32, 32, 0], "金牛座": [32, 128, 32, 128], "雙子座": [32, 80, 80, 128], "巨蟹座": [32, 32, 128, 128], "獅子座": [128, 32, 32, 128], "處女座": [80, 80, 32, 128], "天秤座": [80, 32, 80, 128], "天蠍座": [32, 32, 128, 0], "射手座": [80, 80, 32, 0], "摩羯座": [32, 128, 32, 0], "水瓶座": [80, 32, 80, 0], "雙魚座": [32, 80, 80, 0] },
+            BLOOD: { "O 型": [96, 0, 0, 0], "B 型": [0, 96, 0, 0], "A 型": [0, 0, 96, 0], "AB 型": [0, 48, 48, 0], "AO 型": [32, 0, 64, 0], "BO 型": [32, 64, 0, 0] },
+            CLIMATE: { 
+                "基隆市": [62, 105, 198], "台北市": [82, 118, 165], "新北市": [85, 110, 170], "桃園市": [98, 122, 145], "新竹市": [112, 128, 125], "新竹縣": [110, 127, 128], "苗栗縣": [125, 125, 115], "台中市": [155, 118, 92], "彰化縣": [162, 108, 95], "南投縣": [145, 105, 115], "雲林縣": [175, 105, 85], "嘉義市": [172, 101, 92], "嘉義縣": [170, 100, 95], "台南市": [188, 95, 82], "高雄市": [192, 85, 88], "屏東縣": [185, 85, 95], "宜蘭縣": [68, 102, 195], "花蓮縣": [92, 111, 162], "台東縣": [115, 105, 145], "澎湖縣": [175, 105, 85], "金門縣": [155, 115, 95], "連江縣": [125, 135, 105],
+                "東京 (Tokyo)": [88, 162, 115], "大阪 (Osaka)": [95, 165, 105], "香港 (Hong Kong)": [105, 160, 100], "上海 (Shanghai)": [90, 145, 130], "紐約 (New York)": [107, 138, 120], "舊金山 (SF)": [160, 132, 73], "洛杉磯 (LA)": [186, 145, 34], "費城 (Philadelphia)": [93, 151, 121], "西雅圖 (Seattle)": [71, 142, 152], "倫敦 (London)": [62, 194, 109], "雪梨 (Sydney)": [104, 118, 143], "巴黎 (Paris)": [64, 190, 111], "柏林 (Berlin)": [55, 204, 106], "羅馬 (Rome)": [126, 160, 79], "伊斯坦堡 (Istanbul)": [81, 175, 109]
             }
         }
     };
 
     window.onload = () => {
-        const today = new Date();
-        document.getElementById("version-info").innerText = `Version: ${CONFIG.VERSION} | Generated: ${today.toLocaleDateString()}`;
+        const setupYearSelect = (id) => {
+            const el = document.getElementById(id);
+            const currentY = new Date().getFullYear();
+            for (let i = 0; i < 100; i++) {
+                let y = currentY - i;
+                let opt = new Option(y, y);
+                if (y === 2000) opt.selected = true;
+                el.add(opt);
+            }
+        };
         const setupSelect = (id, data, text) => {
             const el = document.getElementById(id);
             el.options.add(new Option(text, "none"));
             for (let k in data) el.options.add(new Option(k, k));
         };
-        setupSelect("z1", CONFIG.DATA.ZODIAC, "選擇星座");
-        setupSelect("z2", CONFIG.DATA.ZODIAC, "選擇星座");
-        setupSelect("b1", CONFIG.DATA.BLOOD, "選擇血型");
-        setupSelect("b2", CONFIG.DATA.BLOOD, "選擇血型");
+        ["y1", "y2"].forEach(id => setupYearSelect(id));
+        ["z1", "z2"].forEach(id => setupSelect(id, CONFIG.DATA.ZODIAC, "星座"));
+        ["b1", "b2"].forEach(id => setupSelect(id, CONFIG.DATA.BLOOD, "血型"));
+        ["l1", "l2"].forEach(id => setupSelect(id, CONFIG.DATA.CLIMATE, "居住地"));
+        document.getElementById("version-info").innerText = `Version: ${CONFIG.VERSION}`;
+        執行計算();
     };
 
-    function 生成特質Html(val, posN, negN, 原生值) {
-        let isPos = val >= CONFIG.THRESHOLDS.POSITIVE;
-        let displayVal = Math.round(val - CONFIG.THRESHOLDS.OFFSET);
-        let text = (isPos ? posN : negN);
-        let style = "";
-        let arrowHtml = "";
-
-        if (原生值 !== undefined && Math.round(val) !== Math.round(原生值)) {
-            if (val > 原生值) {
-                style = `color: ${CONFIG.COLORS.UP};`;
-                text = (isPos ? CONFIG.PREFIX.INTER_ENHANCED : CONFIG.PREFIX.INTER_SUPPRESSED) + text;
-                arrowHtml = `<span class="趨勢標記" style="color:${CONFIG.COLORS.UP}">▲</span>`;
-            } else {
-                style = `color: ${CONFIG.COLORS.DOWN};`;
-                text = (isPos ? CONFIG.PREFIX.INTER_WEAKENED : CONFIG.PREFIX.INTER_INTENSIFIED) + text;
-                arrowHtml = `<span class="趨勢標記" style="color:${CONFIG.COLORS.DOWN}">▼</span>`;
-            }
-        } else {
-            if (val >= 255) { text = CONFIG.PREFIX.STRONG + text; style = `color:${CONFIG.COLORS.MAX}; font-weight:bold;`; }
-            else if (val > 191) text = CONFIG.PREFIX.OBVIOUS + text;
-            else if (val < 64) { 
-                if (val === 0) { text = CONFIG.PREFIX.DETERIORATED + text; style = `color:${CONFIG.COLORS.MIN}; font-weight:bold;`; }
-            }
-            if (!style) style = `color: ${isPos ? CONFIG.COLORS.POS : CONFIG.COLORS.NEG};`;
-        }
-        return `<div class="特質項目" style="${style}">• ${text} (${displayVal})${arrowHtml}</div>`;
+    function 運算年份加權(yearStr) {
+        if (!yearStr) return [0, 0];
+        const calcA = (s) => {
+            let sum = s.split('').reduce((a, b) => a + parseInt(b), 0);
+            return sum >= 12 ? calcA(sum.toString()) : sum;
+        };
+        const calcB = (s) => {
+            let digits = s.split('').map(d => parseInt(d));
+            let diff = Math.abs(digits.reduce((a, b) => a - b));
+            return diff >= 12 ? calcB(diff.toString()) : diff;
+        };
+        return [calcA(yearStr), calcB(yearStr)];
     }
 
-    function 判定(p陣列, 原生陣列) {
-        let res = [];
-        const [r, g, b] = p陣列;
-        const [or, og, ob] = 原生陣列 || [undefined, undefined, undefined];
-
-        CONFIG.TRAITS.PRIMARY.forEach((trait, i) => {
-            res.push(生成特質Html(p陣列[i], trait.p, trait.n, 原生陣列 ? 原生陣列[i] : undefined));
-        });
-
-        const checkSec = (v1, v2, def, ov1, ov2) => {
-            if (Math.abs(v1 - v2) <= CONFIG.THRESHOLDS.SECONDARY_DIFF) {
-                let curAvg = (v1 + v2) / 2;
-                let oldAvg = (ov1 !== undefined && ov2 !== undefined) ? (ov1 + ov2) / 2 : undefined;
-                res.push(生成特質Html(curAvg, def.p, def.n, oldAvg));
-            }
+    function 套用單一權重(rgb, weight, tier) {
+        let [r, g, b] = rgb;
+        let w = weight === 0 ? 12 : weight;
+        
+        // 根據 tier 決定倍率
+        // Tier 0: 一般, Tier 1: 大年(x1.3/x1.15), Tier 2: 1975+BO(x1.5/x1.3)
+        const multipliers = {
+            1: [1.1, 1.2, 1.3],   // 單一 R/G/B
+            2: [1.05, 1.1, 1.2]  // 複合 RG/GB/BR
         };
-        checkSec(r, g, CONFIG.TRAITS.SECONDARY.RG, or, og);
-        checkSec(g, b, CONFIG.TRAITS.SECONDARY.GB, og, ob);
-        checkSec(b, r, CONFIG.TRAITS.SECONDARY.BR, ob, or);
+        
+        const m1 = multipliers[1][tier];
+        const m2 = multipliers[2][tier];
 
-        return res.join('');
+        switch(w) {
+            case 1: r *= m1; break;                 // R
+            case 2: r *= m2; g *= m2; break;         // RG
+            case 3: g *= m1; break;                 // G
+            case 4: g *= m2; b *= m2; break;         // GB
+            case 5: b *= m1; break;                 // B
+            case 6: b *= m2; r *= m2; break;         // BR
+            case 7: r *= 0.95; g *= 0.95; break;
+            case 8: r *= 0.9; break;
+            case 9: g *= 0.9; break;
+            case 10: g *= 0.95; b *= 0.95; break;
+            case 11: b *= 0.9; break;
+            case 12: b *= 0.95; r *= 0.95; break;
+        }
+        return [r, g, b];
+    }
+
+    function 套用年份影響(rgb, weights, year, blood) {
+        let res = [...rgb];
+        let tier = 0; // 預設一般
+        
+        const yInt = parseInt(year);
+        const specialYears = [1950, 1975, 2000, 2025];
+        const bloodSpecial = ["O 型", "BO 型", "B 型", "AO 型", "A 型", "AB 型"];
+        
+        if (yInt == specialYears[1] && blood == bloodSpecial[1]) {
+            tier = 2; 
+        }
+        
+        res = 套用單一權重(res, weights[0], tier);
+        res = 套用單一權重(res, weights[1], tier);
+        return res.map(v => Math.max(0, Math.min(255, v)));
+    }
+
+    function 獲取完整特質陣列(rgb) {
+        const [r, g, b] = rgb;
+        return [r, g, b, (r + g) / 2, (g + b) / 2, (b + r) / 2];
+    }
+
+    function 生成特質Html(val, labels, index, 原生值) {
+        if (val >= 96 && val <= 159) return "";
+        const posN = labels[index].p, negN = labels[index].n;
+        const displayVal = Math.round(Math.abs(val - 128));
+        let text = "", prefix = "", styleColor = "", isBold = false;
+        if (val >= 160) {
+            text = posN;
+            if (val >= 223) { prefix = "極致的"; styleColor = CONFIG.COLORS.POS_EXTREME; isBold = true; }
+            else if (val >= 192) { prefix = "明朗的"; styleColor = CONFIG.COLORS.POS_BRIGHT; }
+            else { styleColor = CONFIG.COLORS.POS_NORMAL; }
+        } else if (val <= 95) {
+            text = negN;
+            if (val <= 31) { prefix = "糟糕的"; styleColor = CONFIG.COLORS.NEG_BAD; isBold = true; }
+            else if (val <= 63) { prefix = "突兀的"; styleColor = CONFIG.COLORS.NEG_ABRUPT; }
+            else { styleColor = CONFIG.COLORS.NEG_NORMAL; }
+        }
+        if (!text) return "";
+        let arrow = "";
+        if (原生值 !== undefined && Math.round(val) !== Math.round(原生值)) {
+            arrow = val > 原生值 ? `<span class="趨勢標記" style="color:${CONFIG.COLORS.UP}">▲</span>` : `<span class="趨勢標記" style="color:${CONFIG.COLORS.DOWN}">▼</span>`;
+        }
+        return `<div class="特質項目" style="color:${styleColor};${isBold ? 'font-weight:bold;' : ''}">• ${prefix}${text} (${displayVal})${arrow}</div>`;
+    }
+
+    function 判定(完整陣列, 原生陣列, 是否為合併) {
+        const labels = 是否為合併 ? CONFIG.TRAITS.MERGE : [...CONFIG.TRAITS.PRIMARY, ...CONFIG.TRAITS.SECONDARY];
+        return 完整陣列.map((val, i) => 生成特質Html(val, labels, i, 原生陣列 ? 原生陣列[i] : undefined)).filter(h => h !== "").join('');
     }
 
     function 執行計算() {
-        const getP = (z, b) => {
-            const zv = document.getElementById(z).value, bv = document.getElementById(b).value;
-            if (zv === "none" || bv === "none") return null;
-            const zD = CONFIG.DATA.ZODIAC[zv], bD = CONFIG.DATA.BLOOD[bv];
-            return [zD[0]+bD[0], zD[1]+bD[1], zD[2]+bD[2], zD[3]+bD[3]];
+        const getFullPersonData = (y, z, b, l) => {
+            const year = document.getElementById(y).value, zv = document.getElementById(z).value, bv = document.getElementById(b).value, lv = document.getElementById(l).value;
+            if (zv === "none" || bv === "none" || lv === "none") return null;
+            const zD = CONFIG.DATA.ZODIAC[zv], bD = CONFIG.DATA.BLOOD[bv], cD = CONFIG.DATA.CLIMATE[lv];
+            let baseRGB = [zD[0] + bD[0] + (cD[0] / 10), zD[1] + bD[1] + (cD[1] / 10), zD[2] + bD[2] + (cD[2] / 10)];
+            let finalRGB = 套用年份影響(baseRGB, 運算年份加權(year), year, bv);
+            return [...finalRGB, zD[3]];
         };
 
-        const p1 = getP("z1", "b1"), p2 = getP("z2", "b2");
+        const p1 = getFullPersonData("y1", "z1", "b1", "l1"), p2 = getFullPersonData("y2", "z2", "b2", "l2");
+        ["p1_raw", "p1_inter", "p2_raw", "p2_inter", "descR"].forEach(id => document.getElementById(id).innerHTML = "");
+        ["c1", "c2", "cr"].forEach(id => document.getElementById(id).style.backgroundColor = "#eee");
 
-        // 顯示 A 原生與圓圈顏色 (套用亮度加成)
         if (p1) {
-            document.getElementById("p1_raw").innerHTML = 判定(p1);
-            let lum = p1[3] || 0;
-            let r = Math.min(255, p1[0] + lum), g = Math.min(255, p1[1] + lum), b = Math.min(255, p1[2] + lum);
-            document.getElementById("c1").style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-        } else {
-            document.getElementById("p1_raw").innerHTML = "";
-            document.getElementById("c1").style.backgroundColor = "#eee";
+            const fullP1 = 獲取完整特質陣列(p1.slice(0,3));
+            document.getElementById("p1_raw").innerHTML = 判定(fullP1, null, false);
+            document.getElementById("c1").style.backgroundColor = `rgb(${Math.min(255, p1[0]+p1[3])}, ${Math.min(255, p1[1]+p1[3])}, ${Math.min(255, p1[2]+p1[3])})`;
         }
-
-        // 顯示 B 原生與圓圈顏色 (套用亮度加成)
         if (p2) {
-            document.getElementById("p2_raw").innerHTML = 判定(p2);
-            let lum = p2[3] || 0;
-            let r = Math.min(255, p2[0] + lum), g = Math.min(255, p2[1] + lum), b = Math.min(255, p2[2] + lum);
-            document.getElementById("c2").style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-        } else {
-            document.getElementById("p2_raw").innerHTML = "";
-            document.getElementById("c2").style.backgroundColor = "#eee";
-        }
-        
-        if (!p1 || !p2) {
-            document.getElementById("p1_inter").innerHTML = "";
-            document.getElementById("p2_inter").innerHTML = "";
-            document.getElementById("descR").innerHTML = "";
-            document.getElementById("cr").style.backgroundColor = "#eee";
-            return;
+            const fullP2 = 獲取完整特質陣列(p2.slice(0,3));
+            document.getElementById("p2_raw").innerHTML = 判定(fullP2, null, false);
+            document.getElementById("c2").style.backgroundColor = `rgb(${Math.min(255, p2[0]+p2[3])}, ${Math.min(255, p2[1]+p2[3])}, ${Math.min(255, p2[2]+p2[3])})`;
         }
 
-        // 對方影響計算
-        const calcInter = (tP, tL, oL) => tP.slice(0,3).map(v => {
-            let isPos = v >= 128;
-            if (tL === 128 && oL === 128) return isPos ? Math.min(255, v+64) : v;
-            if (tL === 0 && oL === 0) return isPos ? Math.max(0, v-64) : v;
-            return tL !== oL ? (isPos ? Math.min(255, v+32) : Math.max(0, v-32)) : v;
-        });
-
-        const iP1 = calcInter(p1, p1[3], p2[3]), iP2 = calcInter(p2, p2[3], p1[3]);
-        document.getElementById("p1_inter").innerHTML = (p1[3]===p2[3] && p1[3]!==128 && p1[3]!==0) ? CONFIG.UI.NO_INTERFERENCE : 判定(iP1, p1);
-        document.getElementById("p2_inter").innerHTML = (p1[3]===p2[3] && p1[3]!==128 && p1[3]!==0) ? CONFIG.UI.NO_INTERFERENCE : 判定(iP2, p2);
-
-        // 合併人格計算與圓圈顏色
-        let fRGB = p1.slice(0,3).map((v, i) => {
-            let sum = v + p2[i];
-            if (p1[3] === 128 && p2[3] === 128) sum = Math.min(255, sum + 64);
-            else if (p1[3] === 0 && p2[3] === 0) sum = Math.max(0, sum - 64);
-            return Math.max(0, Math.min(255, sum));
-        });
-
-        document.getElementById("descR").innerHTML = 判定(fRGB);
-        document.getElementById("cr").style.backgroundColor = `rgb(${fRGB[0]}, ${fRGB[1]}, ${fRGB[2]})`;
+        if (p1 && p2) {
+            const fullP1 = 獲取完整特質陣列(p1.slice(0,3)), fullP2 = 獲取完整特質陣列(p2.slice(0,3));
+            const calcInter = (targetP, targetFull, otherL) => {
+                let res = [...targetFull];
+                if (targetP[3] === 128 && otherL === 128) {
+                    let maxVal = Math.max(...res), minVal = Math.min(...res);
+                    res = res.map(v => (v === maxVal ? v + 32 : (v === minVal ? v - 8 : v)));
+                } else if (targetP[3] === 0 && otherL === 0) {
+                    let minVal = Math.min(...res), maxVal = Math.max(...res);
+                    res = res.map(v => (v === minVal ? v + 32 : (v === maxVal ? v - 8 : v)));
+                } else if (targetP[3] !== otherL) {
+                    res = res.map(v => v + 4);
+                }
+                return res.map(v => Math.max(0, Math.min(255, v)));
+            };
+            document.getElementById("p1_inter").innerHTML = 判定(calcInter(p1, fullP1, p2[3]), fullP1, false);
+            document.getElementById("p2_inter").innerHTML = 判定(calcInter(p2, fullP2, p1[3]), fullP2, false);
+            let fRGB = p1.slice(0,3).map((v, i) => {
+                let avg = (v + p2[i]) / 2;
+                if (p1[3] === 128 && p2[3] === 128) avg += 32;
+                else if (p1[3] === 0 && p2[3] === 0) avg -= 32;
+                return Math.max(0, Math.min(255, avg));
+            });
+            document.getElementById("descR").innerHTML = 判定(獲取完整特質陣列(fRGB), null, true);
+            document.getElementById("cr").style.backgroundColor = `rgb(${fRGB[0]}, ${fRGB[1]}, ${fRGB[2]})`;
+        }
     }
 </script>
 </body>
