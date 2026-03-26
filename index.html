@@ -247,7 +247,7 @@
 
 <script>
     const CONFIG = {
-        VERSION: "0.9.0",
+        VERSION: "0.9.1",
         COLORS: {
             UP: "#009F00", DOWN: "#BF00BF",
             NEG_BAD: "#FF0000", NEG_ABRUPT: "#FF3F3F", NEG_NORMAL: "#FF5F5F",
@@ -265,7 +265,6 @@
         }
     };
 
-    // 運算邏輯與 Version 2.0.0 核心一致
     window.onload = () => {
         const setupYearSelect = (id) => {
             const el = document.getElementById(id);
@@ -340,6 +339,7 @@
         const posN = labels[index].p, negN = labels[index].n;
         const displayVal = Math.round(Math.abs(val - 128));
         let text = "", prefix = "", styleColor = "", isBold = false;
+        let numSign = ""; // 用於處理正負號顯示
         if (val >= 160) {
             text = posN;
             if (val >= 223) { prefix = "極致的"; styleColor = CONFIG.COLORS.POS_EXTREME; isBold = true; }
@@ -347,6 +347,7 @@
             else { styleColor = CONFIG.COLORS.POS_NORMAL; }
         } else if (val <= 95) {
             text = negN;
+            numSign = "-"; // 負面特質加上負號
             if (val <= 31) { prefix = "糟糕的"; styleColor = CONFIG.COLORS.NEG_BAD; isBold = true; }
             else if (val <= 63) { prefix = "突兀的"; styleColor = CONFIG.COLORS.NEG_ABRUPT; }
             else { styleColor = CONFIG.COLORS.NEG_NORMAL; }
@@ -356,7 +357,7 @@
         if (原生值 !== undefined && Math.round(val) !== Math.round(原生值)) {
             arrow = val > 原生值 ? `<span class="趨勢標記" style="color:${CONFIG.COLORS.UP}">▲</span>` : `<span class="趨勢標記" style="color:${CONFIG.COLORS.DOWN}">▼</span>`;
         }
-        return `<div class="特質項目" style="color:${styleColor};${isBold ? 'font-weight:bold;' : ''}">• ${prefix}${text} (${displayVal})${arrow}</div>`;
+        return `<div class="特質項目" style="color:${styleColor};${isBold ? 'font-weight:bold;' : ''}">• ${prefix}${text} (${numSign}${displayVal})${arrow}</div>`;
     }
 
     function 判定(完整陣列, 原生陣列, 是否為合併) {
