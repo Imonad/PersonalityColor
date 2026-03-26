@@ -3,41 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>相處特質分析系統 V2.6.0</title>
+    <title>相處特質分析系統</title>
     <style>
         :root {
-            --bg-color: #fdfdfd; --card-bg: #fff; --border-color: #eee;
-            --text-color: #444; --sub-text-color: #aaa; --raw-bg: #f8f9fa;
-            --raw-border: #ddd; --merge-bg: #fffcf9; --merge-border: #f0f0f0;
+            --bg-color: #f5f5f5; --card-bg: #ffffff; --border-color: #e2e8f0;
+            --text-color: #2d3748; --sub-text-color: #718096; --raw-bg: #f7fafc;
+            --raw-border: #cbd5e0; --merge-bg: #faf9f7; --merge-border: #edf2f7;
             --color-up: #009F00; --color-down: #BF00BF;
         }
-        body { font-family: "Microsoft JhengHei", sans-serif; background: var(--bg-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px 10px; box-sizing: border-box; color: var(--text-color); }
-        .頁首區域 { text-align: center; margin-bottom: 25px; }
-        .主標題 { font-size: 1.5rem; font-weight: bold; color: #333; margin: 0; letter-spacing: 2px; }
-        .版本資訊 { font-size: 0.7rem; color: var(--sub-text-color); margin-top: 5px; }
-        .主容器 { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 600px; box-sizing: border-box; }
-        .卡片 { flex: 1; background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); box-sizing: border-box; }
-        .中央卡片 { order: -1; border: 2px solid #f0f0f0; background: var(--merge-bg); }
-        h1 { font-size: 0.75rem; letter-spacing: 0.15em; color: var(--sub-text-color); margin: 0 0 15px 0; text-transform: uppercase; }
-        .選單區域 { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-        .選單區塊 { flex: 1; min-width: 80px; text-align: left; }
-        label { font-size: 0.6rem; color: #ccc; display: block; margin-bottom: 2px; }
-        select { width: 100%; padding: 8px 0; border: none; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; outline: none; background: transparent; box-sizing: border-box; }
-        .圓圈 { width: 60px; height: 60px; border-radius: 50%; margin: 10px auto; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s; background-color: #eee; }
-        .中央卡片 .圓圈 { width: 90px; height: 90px; }
-        .分析區 { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-        .區塊 { text-align: left; padding: 10px; border-radius: 5px; font-size: 0.7rem; line-height: 1.5; min-height: 20px; }
-        .原生 { background: var(--raw-bg); border-left: 3px solid var(--raw-border); color: #777; }
-        .干預 { background: var(--card-bg); border-left: 3px solid var(--border-color); color: #444; min-height: 70px; }
-        .合併屬性區塊 { background: white; border: 1px inset var(--merge-border); }
-        .小標 { font-size: 0.6rem; font-weight: bold; margin-bottom: 4px; color: #999; display: block; }
-        .特質項目 { margin-bottom: 2px; display: block; }
-        .趨勢標記 { font-size: 0.6rem; margin-left: 4px; vertical-align: middle; }
+        * { box-sizing: border-box; }
+        body { font-family: "Microsoft JhengHei", sans-serif; background: var(--bg-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 24px 16px; color: var(--text-color); line-height: 1.6; }
+        
+        .頁首區域 { text-align: center; margin-bottom: 32px; }
+        .主標題 { font-size: 1.75rem; font-weight: 600; color: #2d3748; margin: 0; letter-spacing: 1px; }
+        .版本資訊 { font-size: 0.8rem; color: var(--sub-text-color); margin-top: 8px; font-weight: normal; }
+        
+        .主容器 { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 640px; }
+        .卡片 { background: var(--card-bg); padding: 28px; border-radius: 6px; border: 1px solid var(--border-color); text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); transition: box-shadow 0.3s ease; }
+        .卡片:hover { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12); }
+        .中央卡片 { order: -1; background: var(--merge-bg); border: 1px solid var(--merge-border); }
+        
+        h1 { font-size: 0.8rem; letter-spacing: 0.12em; color: #4a5568; margin: 0 0 18px 0; font-weight: 600; text-transform: uppercase; }
+        
+        .選單區域 { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+        .選單區塊 { flex: 1; min-width: 70px; text-align: left; }
+        label { font-size: 0.75rem; color: #718096; display: block; margin-bottom: 6px; font-weight: 500; letter-spacing: 0.5px; }
+        select { width: 100%; padding: 12px 8px; border: none; border-bottom: 1px solid var(--border-color); font-size: 1rem; color: var(--text-color); outline: none; background: transparent; transition: border-color 0.2s; }
+        select:focus { border-bottom-color: #4299e1; }
+        
+        .圓圈 { width: 64px; height: 64px; border-radius: 50%; margin: 16px auto; border: 1px solid var(--border-color); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); transition: all 0.3s ease; background-color: #f0f0f0; }
+        .圓圈:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .中央卡片 .圓圈 { width: 100px; height: 100px; margin: 20px auto; }
+        
+        .分析區 { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+        .區塊 { text-align: left; padding: 14px; border-radius: 4px; font-size: 0.75rem; line-height: 1.7; min-height: 24px; border: 1px solid var(--border-color); background: var(--raw-bg); }
+        .原生 { background: var(--raw-bg); border-left: 3px solid var(--raw-border); color: #4a5568; }
+        .干預 { background: var(--card-bg); border-left: 3px solid #4299e1; color: #2d3748; min-height: 80px; }
+        .合併屬性區塊 { background: var(--merge-bg); border-left: 3px solid var(--merge-border); color: #2d3748; }
+        
+        .小標 { font-size: 0.65rem; font-weight: 600; margin-bottom: 6px; color: #718096; display: block; letter-spacing: 0.5px; }
+        .特質項目 { margin-bottom: 4px; display: block; font-size: 0.75rem; }
+        .趨勢標記 { font-size: 0.65rem; margin-left: 6px; vertical-align: middle; }
+        
+        /* 說明容器 - 極簡區塊式設計 */
+        .說明容器 { width: 100%; max-width: 640px; margin-top: 48px; display: block; }
+        .說明標題 { font-size: 1rem; font-weight: 700; color: #2d3748; margin-bottom: 24px; text-align: center; letter-spacing: 0.5px; }
+        
+        .說明區塊 { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); }
+        .說明區塊標題 { font-size: 0.9rem; font-weight: 700; color: #2d3748; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid var(--border-color); }
+        
+        .特質列表 { display: flex; flex-direction: column; gap: 12px; }
+        .特質列項 { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; padding: 10px; background: #f7fafc; border-radius: 4px; }
+        .特質正面 { color: #2d3748; font-weight: 500; flex: 1; }
+        .特質分隔 { color: #cbd5e0; font-weight: 300; }
+        .特質負面 { color: #718096; font-weight: 400; flex: 1; }
+        
+        .年份分組 { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .年份小區塊 { background: #f7fafc; border-radius: 4px; padding: 18px; border-left: 3px solid var(--border-color); }
+        .年份群組標籤 { font-size: 0.8rem; font-weight: 700; color: #2d3748; margin-bottom: 14px; }
+        .年份項目 { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .年份項 { font-size: 0.75rem; color: #4a5568; padding: 8px; background: white; border-radius: 3px; border: 1px solid #edf2f7; }
+        
+        /* 響應式設計 */
+        @media (min-width: 768px) {
+            body { padding: 28px 20px; }
+            .頁首區域 { margin-bottom: 36px; }
+            .主標題 { font-size: 2rem; }
+            .主容器 { max-width: 680px; }
+            .卡片 { padding: 32px; }
+            .說明容器 { max-width: 680px; }
+            .年份分組 { grid-template-columns: 1fr 1fr; }
+        }
+
         @media (min-width: 992px) {
-            .主容器 { flex-direction: row; max-width: 1400px; padding: 15px; align-items: center; gap: 15px; }
-            .中央卡片 { order: 0; flex: 0 0 370px; } 
-            .圓圈 { width: 70px; height: 70px; }
-            .中央卡片 .圓圈 { width: 110px; height: 110px; }
+            body { padding: 32px 24px; }
+            .頁首區域 { margin-bottom: 40px; }
+            .主標題 { font-size: 2.2rem; }
+            .主容器 { flex-direction: row; max-width: 1280px; gap: 24px; align-items: flex-start; }
+            .中央卡片 { order: 0; flex: 0 0 320px; padding: 32px 28px; }
+            .卡片 { flex: 1; padding: 36px; }
+            .圓圈 { width: 72px; height: 72px; }
+            .中央卡片 .圓圈 { width: 120px; height: 120px; }
+            .說明容器 { max-width: 1280px; display: flex; flex-wrap: wrap; gap: 24px; margin-top: 56px; }
+            .說明標題 { width: 100%; }
+            .說明區塊 { flex: 1; min-width: 300px; }
         }
     </style>
 </head>
@@ -45,6 +94,7 @@
 
 <div class="頁首區域">
     <div class="主標題">相處特質分析系統</div>
+    <div class="版本資訊">本系統用於分析兩人之間的相處特質與關係融合程度，目前屬於測試階段，僅供休閒使用，尚未適合用於學術研究。</div>
     <div id="version-info" class="版本資訊"></div>
 </div>
 
@@ -66,7 +116,7 @@
             <div class="選單區塊"><label>出生年份</label><select id="y1" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>星座</label><select id="z1" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>血型</label><select id="b1" onchange="執行計算()"></select></div>
-            <div class="選選區域 選單區塊"><label>居住地</label><select id="l1" onchange="執行計算()"></select></div>
+            <div class="選單區塊"><label>常態居住地</label><select id="l1" onchange="執行計算()"></select></div>
         </div>
         <div id="c1" class="圓圈"></div>
         <div class="分析區">
@@ -81,7 +131,7 @@
             <div class="選單區塊"><label>出生年份</label><select id="y2" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>星座</label><select id="z2" onchange="執行計算()"></select></div>
             <div class="選單區塊"><label>血型</label><select id="b2" onchange="執行計算()"></select></div>
-            <div class="選單區塊"><label>居住地</label><select id="l2" onchange="執行計算()"></select></div>
+            <div class="選單區塊"><label>常態居住地</label><select id="l2" onchange="執行計算()"></select></div>
         </div>
         <div id="c2" class="圓圈"></div>
         <div class="分析區">
@@ -91,9 +141,113 @@
     </div>
 </div>
 
+<div class="說明容器">
+    <div class="說明標題">系統使用說明與邏輯對照</div>
+    
+    <div class="說明區塊">
+        <div class="說明區塊標題">個人色彩心理特質 (12項)</div>
+        <div class="特質列表">
+            <div class="特質列項">
+                <div class="特質正面" style="color: #FF7F7F;">行動與能量</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #CF0000;">侵略與煩躁</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #CFCF00;">樂觀與創意</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #7F7F00;">焦慮與詭譎</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #3FCF3F;">和平與穩定</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #009F00;">執拗與嫉妒</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #00CFCF;">理性與溝通</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #007F7F;">疏離與冷漠</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #9F9FFF;">嚴謹與深思</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #0000FF;">憂鬱與墨守</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #FF00FF;">感性與直覺</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #7F007F;">病態與自我</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="說明區塊">
+        <div class="說明區塊標題">關係融合共伴特質 (12項)</div>
+        <div class="特質列表">
+            <div class="特質列項">
+                <div class="特質正面" style="color: #FF7F7F;">共鳴與增長</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #CF0000;">競爭與消耗</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #CFCF00;">默契與同步</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #7F7F00;">控制與窒息</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #3FCF3F;">依賴與托付</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #009F00;">依附與索求</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #00CFCF;">坦誠與接納</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #007F7F;">疏離與冷暴力</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #9F9FFF;">好奇與趣味</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #0000FF;">倦怠與墨守</div>
+            </div>
+            <div class="特質列項">
+                <div class="特質正面" style="color: #FF00FF;">靈魂的交織</div>
+                <div class="特質分隔">/</div>
+                <div class="特質負面" style="color: #7F007F;">病態的共生</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="說明區塊">
+        <div class="說明區塊標題">出生年份影響說明</div>
+        <div class="年份分組">
+            <div class="年份小區塊">
+                <div class="年份群組標籤">強化年份 (1–6)</div>
+                <div class="年份項目">
+                    <div class="年份項" style="color: #FF7F7F;">開創之年 (1)</div>
+                    <div class="年份項" style="color: #CFCF00;">創意之年 (2)</div>
+                    <div class="年份項" style="color: #3FCF3F;">和平之年 (3)</div>
+                    <div class="年份項" style="color: #00CFCF;">溝通之年 (4)</div>
+                    <div class="年份項" style="color: #9F9FFF;">嚴謹之年 (5)</div>
+                    <div class="年份項" style="color: #FF00FF;">感性之年 (6)</div>
+                </div>
+            </div>
+            <div class="年份小區塊">
+                <div class="年份群組標籤">磨合年份 (7–12)</div>
+                <div class="年份項目">
+                    <div class="年份項" style="color: #CF0000;">衝突之年 (7)</div>
+                    <div class="年份項" style="color: #7F7F00;">焦慮之年 (8)</div>
+                    <div class="年份項" style="color: #009F00;">執拗之年 (9)</div>
+                    <div class="年份項" style="color: #007F7F;">冷漠之年 (10)</div>
+                    <div class="年份項" style="color: #0000FF;">憂鬱之年 (11)</div>
+                    <div class="年份項" style="color: #7F007F;">混亂之年 (12)</div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>
+
 <script>
     const CONFIG = {
-        VERSION: "2.6.0",
+        VERSION: "0.9.0",
         COLORS: {
             UP: "#009F00", DOWN: "#BF00BF",
             NEG_BAD: "#FF0000", NEG_ABRUPT: "#FF3F3F", NEG_NORMAL: "#FF5F5F",
@@ -107,13 +261,11 @@
         DATA: {
             ZODIAC: { "牡羊座": [128, 32, 32, 0], "金牛座": [32, 128, 32, 128], "雙子座": [32, 80, 80, 128], "巨蟹座": [32, 32, 128, 128], "獅子座": [128, 32, 32, 128], "處女座": [80, 80, 32, 128], "天秤座": [80, 32, 80, 128], "天蠍座": [32, 32, 128, 0], "射手座": [80, 80, 32, 0], "摩羯座": [32, 128, 32, 0], "水瓶座": [80, 32, 80, 0], "雙魚座": [32, 80, 80, 0] },
             BLOOD: { "O 型": [96, 0, 0, 0], "B 型": [0, 96, 0, 0], "A 型": [0, 0, 96, 0], "AB 型": [0, 48, 48, 0], "AO 型": [32, 0, 64, 0], "BO 型": [32, 64, 0, 0] },
-            CLIMATE: { 
-                "基隆市": [62, 105, 198], "台北市": [82, 118, 165], "新北市": [85, 110, 170], "桃園市": [98, 122, 145], "新竹市": [112, 128, 125], "新竹縣": [110, 127, 128], "苗栗縣": [125, 125, 115], "台中市": [155, 118, 92], "彰化縣": [162, 108, 95], "南投縣": [145, 105, 115], "雲林縣": [175, 105, 85], "嘉義市": [172, 101, 92], "嘉義縣": [170, 100, 95], "台南市": [188, 95, 82], "高雄市": [192, 85, 88], "屏東縣": [185, 85, 95], "宜蘭縣": [68, 102, 195], "花蓮縣": [92, 111, 162], "台東縣": [115, 105, 145], "澎湖縣": [175, 105, 85], "金門縣": [155, 115, 95], "連江縣": [125, 135, 105],
-                "東京 (Tokyo)": [88, 162, 115], "大阪 (Osaka)": [95, 165, 105], "香港 (Hong Kong)": [105, 160, 100], "上海 (Shanghai)": [90, 145, 130], "紐約 (New York)": [107, 138, 120], "舊金山 (SF)": [160, 132, 73], "洛杉磯 (LA)": [186, 145, 34], "費城 (Philadelphia)": [93, 151, 121], "西雅圖 (Seattle)": [71, 142, 152], "倫敦 (London)": [62, 194, 109], "雪梨 (Sydney)": [104, 118, 143], "巴黎 (Paris)": [64, 190, 111], "柏林 (Berlin)": [55, 204, 106], "羅馬 (Rome)": [126, 160, 79], "伊斯坦堡 (Istanbul)": [81, 175, 109]
-            }
+            CLIMATE: { "基隆市": [62, 105, 198], "台北市": [82, 118, 165], "新北市": [85, 110, 170], "桃園市": [98, 122, 145], "新竹市": [112, 128, 125], "新竹縣": [110, 127, 128], "苗栗縣": [125, 125, 115], "台中市": [155, 118, 92], "彰化縣": [162, 108, 95], "南投縣": [145, 105, 115], "雲林縣": [175, 105, 85], "嘉義市": [172, 101, 92], "嘉義縣": [170, 100, 95], "台南市": [188, 95, 82], "高雄市": [192, 85, 88], "屏東縣": [185, 85, 95], "宜蘭縣": [68, 102, 195], "花蓮縣": [92, 111, 162], "台東縣": [115, 105, 145], "澎湖縣": [175, 105, 85], "金門縣": [155, 115, 95], "連江縣": [125, 135, 105], "東京 (Tokyo)": [88, 162, 115], "大阪 (Osaka)": [95, 165, 105], "香港 (Hong Kong)": [105, 160, 100], "上海 (Shanghai)": [90, 145, 130], "紐約 (New York)": [107, 138, 120], "舊金山 (SF)": [160, 132, 73], "洛杉磯 (LA)": [186, 145, 34], "費城 (Philadelphia)": [93, 151, 121], "西雅圖 (Seattle)": [71, 142, 152], "倫敦 (London)": [62, 194, 109], "雪梨 (Sydney)": [104, 118, 143], "巴黎 (Paris)": [64, 190, 111], "柏林 (Berlin)": [55, 204, 106], "羅馬 (Rome)": [126, 160, 79], "伊斯坦堡 (Istanbul)": [81, 175, 109] }
         }
     };
 
+    // 運算邏輯與 Version 2.0.0 核心一致
     window.onload = () => {
         const setupYearSelect = (id) => {
             const el = document.getElementById(id);
@@ -155,46 +307,24 @@
     function 套用單一權重(rgb, weight, tier) {
         let [r, g, b] = rgb;
         let w = weight === 0 ? 12 : weight;
-        
-        // 根據 tier 決定倍率
-        // Tier 0: 一般, Tier 1: 大年(x1.3/x1.15), Tier 2: 1975+BO(x1.5/x1.3)
-        const multipliers = {
-            1: [1.1, 1.2, 1.3],   // 單一 R/G/B
-            2: [1.05, 1.1, 1.2]  // 複合 RG/GB/BR
-        };
-        
-        const m1 = multipliers[1][tier];
-        const m2 = multipliers[2][tier];
-
+        const multipliers = { 1: [1.1, 1.2, 1.3], 2: [1.05, 1.1, 1.2] };
+        const m1 = multipliers[1][tier], m2 = multipliers[2][tier];
         switch(w) {
-            case 1: r *= m1; break;                 // R
-            case 2: r *= m2; g *= m2; break;         // RG
-            case 3: g *= m1; break;                 // G
-            case 4: g *= m2; b *= m2; break;         // GB
-            case 5: b *= m1; break;                 // B
-            case 6: b *= m2; r *= m2; break;         // BR
-            case 7: r *= 0.95; g *= 0.95; break;
-            case 8: r *= 0.9; break;
-            case 9: g *= 0.9; break;
-            case 10: g *= 0.95; b *= 0.95; break;
-            case 11: b *= 0.9; break;
-            case 12: b *= 0.95; r *= 0.95; break;
+            case 1: r *= m1; break; case 2: r *= m2; g *= m2; break; case 3: g *= m1; break;
+            case 4: g *= m2; b *= m2; break; case 5: b *= m1; break; case 6: b *= m2; r *= m2; break;
+            case 7: r *= 0.95; g *= 0.95; break; case 8: r *= 0.9; break; case 9: g *= 0.9; break;
+            case 10: g *= 0.95; b *= 0.95; break; case 11: b *= 0.9; break; case 12: b *= 0.95; r *= 0.95; break;
         }
         return [r, g, b];
     }
 
     function 套用年份影響(rgb, weights, year, blood) {
         let res = [...rgb];
-        let tier = 0; // 預設一般
-        
+        let tier = 0;
         const yInt = parseInt(year);
         const specialYears = [1950, 1975, 2000, 2025];
-        const bloodSpecial = ["O 型", "BO 型", "B 型", "AO 型", "A 型", "AB 型"];
-        
-        if (yInt == specialYears[1] && blood == bloodSpecial[1]) {
-            tier = 2; 
-        }
-        
+        if (yInt == specialYears[1] && blood == "BO 型") tier = 2;
+        else if (specialYears.includes(yInt)) tier = 1;
         res = 套用單一權重(res, weights[0], tier);
         res = 套用單一權重(res, weights[1], tier);
         return res.map(v => Math.max(0, Math.min(255, v)));
